@@ -1,8 +1,8 @@
 class Docfx < Formula
   desc "Tools for building and publishing API documentation for .NET projects"
   homepage "https://dotnet.github.io/docfx/"
-  url "https://github.com/dotnet/docfx/releases/download/v2.25/docfx.zip"
-  sha256 "6837f551a6298b32c0bb107b1b661af4b1150759d0352af1ecb62c686e98c0a0"
+  url "https://github.com/dotnet/docfx/releases/download/v2.26.4/docfx.zip"
+  sha256 "0a64cb6efd51998cc635846502a236e529a845db108ec66df26b8ebe69a01a9a"
 
   bottle :unneeded
 
@@ -11,7 +11,7 @@ class Docfx < Formula
   def install
     libexec.install Dir["*"]
 
-    (bin/"docfx").write <<-EOS.undent
+    (bin/"docfx").write <<~EOS
       #!/bin/bash
       mono #{libexec}/docfx.exe "$@"
     EOS

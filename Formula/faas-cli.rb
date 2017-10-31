@@ -2,14 +2,14 @@ class FaasCli < Formula
   desc "CLI for templating and/or deploying FaaS functions"
   homepage "http://docs.get-faas.com/"
   url "https://github.com/openfaas/faas-cli.git",
-      :tag => "0.4.18",
-      :revision => "a4f03381443fd5c1e74ea7e17614df9b3b60abd1"
+      :tag => "0.4.20",
+      :revision => "32c3a29e834c26beba68513fcf6b083560314a8a"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "a426c45e9cbe4ab6544325db7a64f535ff3e63207697ac448898900723976b49" => :high_sierra
-    sha256 "c2fa664a069c91485b402109679609e0e65722854c4795e14e228d3d9d137a28" => :sierra
-    sha256 "8677a4480374a8065987ba962955f5a4118966c5e8327bf8d1ab85c749bea0b0" => :el_capitan
+    sha256 "c946493ac79a6f55724f46fbe1c376249cff2ea88d998dd1191a0ece84330625" => :high_sierra
+    sha256 "b0ada8c8bd60b1ff6396ad09a8a16e3c89a3239b8bb249f1a97bd340fc1841f9" => :sierra
+    sha256 "185f9e35394c1f1f5c08a130830c9d4d7dca9441f69bca4e13131b867bfe2e55" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -45,7 +45,7 @@ class FaasCli < Formula
       end
     end
 
-    (testpath/"test.yml").write <<-EOF.undent
+    (testpath/"test.yml").write <<~EOS
       provider:
         name: faas
         gateway: http://localhost:#{port}
@@ -56,9 +56,9 @@ class FaasCli < Formula
           lang: python
           handler: ./dummy_function
           image: dummy_image
-    EOF
+    EOS
 
-    expected = <<-EOS.undent
+    expected = <<~EOS
       Deploying: dummy_function.
       Removing old service.
       Deployed.

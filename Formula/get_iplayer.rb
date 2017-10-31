@@ -1,15 +1,16 @@
 class GetIplayer < Formula
   desc "Utility for downloading TV and radio programmes from BBC iPlayer"
   homepage "https://github.com/get-iplayer/get_iplayer"
-  url "https://github.com/get-iplayer/get_iplayer/archive/v3.04.tar.gz"
-  sha256 "7c3de1fa796e534a03b57c45656b9e97a762174e475504dac081510f1b8febc0"
+  url "https://github.com/get-iplayer/get_iplayer/archive/v3.06.tar.gz"
+  sha256 "fba3f1abd01ca6f9aaed30f9650e1e520fd3b2147fe6aa48fe7c747725b205f7"
+  revision 1
   head "https://github.com/get-iplayer/get_iplayer.git", :branch => "develop"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "2ba8cbb3a4daf42534486a4024e0655773164d4ab2d2545a0097b0bc485f770c" => :high_sierra
-    sha256 "19b83f87b640b2a493c82e20b985242a1489bbc2015046923978afdd1f8434a0" => :sierra
-    sha256 "d482a9b684d306f8ab48d0939f42b5a5a1ab55a925e78a946654181e822f02b3" => :el_capitan
+    sha256 "4113bdf731e4d06b6873dc4e14c3bfb8aa12b5532b5e25e26308e1657f60f91b" => :high_sierra
+    sha256 "a2bdef5acce8128f0890ca8fe9a3d1e80fe790374aa84f3e808f02fb525429c6" => :sierra
+    sha256 "713b87dd2c684257b270da96cdf6acea40b820fe492c4342796a20cbee58bff0" => :el_capitan
   end
 
   depends_on "atomicparsley" => :recommended
@@ -22,13 +23,19 @@ class GetIplayer < Formula
     sha256 "11950da7636cb786efd3bfb5891da4c820975276bce43175214391e5c32b7b96"
   end
 
+  resource "IO::Socket::SSL" do
+    url "https://cpan.metacpan.org/authors/id/S/SU/SULLR/IO-Socket-SSL-2.052.tar.gz"
+    sha256 "e4897a9b17cb18a3c44aa683980d52cef534cdfcb8063d6877c879bfa2f26673"
+  end
+
   resource "Mojolicious" do
-    url "https://cpan.metacpan.org/authors/id/S/SR/SRI/Mojolicious-7.46.tar.gz"
-    sha256 "86212646e4859ddb2e003360dd5658bda6b2552202e5361908a27330c2747646"
+    url "https://cpan.metacpan.org/authors/id/S/SR/SRI/Mojolicious-7.48.tar.gz"
+    sha256 "86d28e66a352e808ab1eae64ef93b90a9a92b3c1b07925bd2d3387a9e852388e"
   end
 
   def install
     ENV.prepend_create_path "PERL5LIB", libexec/"lib/perl5"
+    ENV["NO_NETWORK_TESTING"] = "1"
 
     resources.each do |r|
       r.stage do

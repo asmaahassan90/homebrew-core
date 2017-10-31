@@ -1,14 +1,14 @@
 class Fn < Formula
   desc "Command-line tool for the fn project"
   homepage "https://fnproject.github.io"
-  url "https://github.com/fnproject/cli/archive/0.4.7.tar.gz"
-  sha256 "0232d4c2a502faa226b6c2c6c407d72a92c3c87fbde2374055458421b3d57f2c"
+  url "https://github.com/fnproject/cli/archive/0.4.12.tar.gz"
+  sha256 "8307177651f86c3bae83456e54e950c6e7e1b50db97765847e316b83b1defc52"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "5f7c68826d6c0608b2e719f8a4380d87ac131b779e2a1904766aca61c5b3294d" => :high_sierra
-    sha256 "6c6a1222ede1690975fa85a53995ffd3b541b5338fdd74bc1ee91f084d8a0aa8" => :sierra
-    sha256 "fdfd2b1c6615bcafd6c6b0a2df42a87c88ae8283b15127214e8eda081fcc2299" => :el_capitan
+    sha256 "67c3a5e7b36acc79f77a08e8e80315339ddc96672da875fce91ba6065baedf99" => :high_sierra
+    sha256 "207b173921be5d3ac051220969ee7cd01dccf87d1a7c6c5191b894d66e2b4bf1" => :sierra
+    sha256 "6d3ba3f9b64d86e569d0e3ef1e76186e8d3ccb949d8b4fa7d663ad0970c9998b" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -50,7 +50,7 @@ class Fn < Formula
       ENV["API_URL"] = "http://localhost:#{port}"
       ENV["FN_REGISTRY"] = "fnproject"
       expected = "/myfunc created with fnproject/myfunc"
-      output = shell_output("#{bin}/fn routes create myapp myfunc")
+      output = shell_output("#{bin}/fn routes create myapp myfunc --image fnproject/myfunc:0.0.1")
       assert_match expected, output.chomp
     ensure
       Process.kill("TERM", pid)

@@ -1,15 +1,15 @@
 class Gopass < Formula
   desc "The slightly more awesome Standard Unix Password Manager for Teams"
   homepage "https://www.justwatch.com/gopass"
-  url "https://www.justwatch.com/gopass/releases/1.4.1/gopass-1.4.1.tar.gz"
-  sha256 "b7f15f6504f14301842423b4ab424f7050fb880ef52a720f16c7ba65611f05ad"
+  url "https://www.justwatch.com/gopass/releases/1.5.1/gopass-1.5.1.tar.gz"
+  sha256 "7a4f42be34c77d3e22e75bcc7be20340c8cd0437bd04cde9667ad0fe6b621121"
   head "https://github.com/justwatchcom/gopass.git"
 
   bottle do
     cellar :any_skip_relocation
-    sha256 "e67fe2d6b31ba0c10b41ba0066c235e7e36f96b688e12e6c72ff03bf2824ccf3" => :high_sierra
-    sha256 "568125508b41b9004363df86df46cc784aa372fa3f29938e597aebe7fa561017" => :sierra
-    sha256 "5c505090966f1542e9782d597d02b696c5fed1b05f3cc6f57349c185b04380b5" => :el_capitan
+    sha256 "85f0f90252e29e600a807567eb408cbaeea7b4b28aec3f2738c1a1fabede1154" => :high_sierra
+    sha256 "d18f790d8e6bc4803a53998ad6d8922159af679b55d26fbebd04b056de1fbf1c" => :sierra
+    sha256 "438b6231c1ad8c527ba2de91c722e17623e1413883a2c65811c5de43aa9e2842" => :el_capitan
   end
 
   depends_on "go" => :build
@@ -32,7 +32,7 @@ class Gopass < Formula
   test do
     assert_match version.to_s, shell_output("#{bin}/gopass version")
 
-    (testpath/"batch.gpg").write <<-EOS.undent
+    (testpath/"batch.gpg").write <<~EOS
       Key-Type: RSA
       Key-Length: 2048
       Subkey-Type: RSA

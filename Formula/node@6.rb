@@ -1,14 +1,14 @@
 class NodeAT6 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v6.11.4/node-v6.11.4.tar.xz"
-  sha256 "4c2f0435e3088136ac4bc75236a7717f189d590a13f490065e7b3b8e5aacd450"
+  url "https://nodejs.org/dist/v6.11.5/node-v6.11.5.tar.xz"
+  sha256 "1c6de415216799fbaeca82304b3fef87accc7101ebf2ead7d5c545e0779e8aaf"
   head "https://github.com/nodejs/node.git", :branch => "v6.x-staging"
 
   bottle do
-    sha256 "5142f7a40f1cd847476402ed2a8119eedd300b69ba66cb2e723ba77f643c302b" => :high_sierra
-    sha256 "a01c18722a1e0bd706610c236973b7a4b38daf938d0df52b0731efc7d5206c60" => :sierra
-    sha256 "6edf9e30997b1b8a89c4799ee92434552134be230968632d4c4c9415f8bf13f7" => :el_capitan
+    sha256 "91c64c0c9035c4c773fe46d85e47d20bb7bce215d6d966e5ab9403c9d0296df8" => :high_sierra
+    sha256 "c8d081952d92811f24fdee83e7cb85d9d48d65a5cd6cce79058faaeb9486f74c" => :sierra
+    sha256 "d695c57b1a45a58edf4981cf0201ece70db6bd76af1700259a9f721f89cd5d8a" => :el_capitan
   end
 
   keg_only :versioned_formula
@@ -33,8 +33,8 @@ class NodeAT6 < Formula
 
   # Keep in sync with main node formula
   resource "npm" do
-    url "https://registry.npmjs.org/npm/-/npm-5.3.0.tgz"
-    sha256 "dd96ece7cbd6186a51ca0a5ab7e1de0113333429603ec2ccb6259e0bef2e03eb"
+    url "https://registry.npmjs.org/npm/-/npm-5.4.2.tgz"
+    sha256 "04dc5f87b1079d59d51404d4b4c4aacbe385807a33bd15a8f2da2fabe27bf443"
   end
 
   resource "icu4c" do
@@ -67,6 +67,10 @@ class NodeAT6 < Formula
       bootstrap.install resource("npm")
       system "node", bootstrap/"bin/npm-cli.js", "install", "-ddd", "--global",
              "--prefix=#{libexec}", resource("npm").cached_download
+
+      # Fix from chrmoritz for ENOENT issue with @ in path to node
+      inreplace libexec/"lib/node_modules/npm/node_modules/libnpx/index.js",
+                "return child.escapeArg(npmPath, true)", "return npmPath"
 
       # The `package.json` stores integrity information about the above passed
       # in `cached_download` npm resource, which breaks `npm -g outdated npm`.
@@ -117,7 +121,7 @@ class NodeAT6 < Formula
     s = ""
 
     if build.without? "npm"
-      s += <<-EOS.undent
+      s += <<~EOS
         Homebrew has NOT installed npm. If you later install it, you should supplement
         your NODE_PATH with the npm module folder:
           #{HOMEBREW_PREFIX}/lib/node_modules
@@ -125,7 +129,7 @@ class NodeAT6 < Formula
     end
 
     if build.without? "full-icu"
-      s += <<-EOS.undent
+      s += <<~EOS
         Please note by default only English locale support is provided. If you need
         full locale support you should either rebuild with full icu:
           `brew reinstall node --with-full-icu`
